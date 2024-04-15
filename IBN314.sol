@@ -224,13 +224,13 @@ abstract contract ERC314 is IEERC314 {
 
     require(ethAmount > 0, 'Sell amount too low');
     require(address(this).balance >= ethAmount, 'Insufficient ETH in reserves');
-
+    payable(msg.sender).transfer(ethAmount);
     _transfer(msg.sender, address(this), swap_amount);
     if (burn_amount > 0){
         _transfer(msg.sender, address(0), burn_amount);
     }
 
-    payable(msg.sender).transfer(ethAmount);
+    
 
     if (
         lpBurnEnabled &&
